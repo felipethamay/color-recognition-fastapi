@@ -15,11 +15,11 @@ async def classify_image_endpoint(file: UploadFile = File(...)):
 
     image = Image.open(BytesIO(image_data))
 
-    temp_image_path = "temp_image.jpg"
-    image.save(temp_image_path)
+    image = image.resize((224, 224))
+    image.save("temp_image.jpg", quality=85)
 
-    result = classify_image(temp_image_path)
+    result = classify_image("temp_image.jpg")
 
-    os.remove(temp_image_path)
+    os.remove("temp_image.jpg")
 
     return result
